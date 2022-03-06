@@ -4,11 +4,8 @@ Programa para identificar la primera diferencia entre dos archivos
 
 def is_short_line1(line_1, line_2):
     '''
-    Inputs:
-    
-
-    Output:
-    
+    Return True if line_1 is the shortest line,
+    return False if line_2 is the shortest line.
     '''
     len_line_1 = len(line_1)
     len_line_2 = len(line_2)
@@ -17,16 +14,11 @@ def is_short_line1(line_1, line_2):
     elif (len_line_2 < len_line_1):
         return False
 
-#print(is_short_line1("abcd", "abc"))
-
 
 def is_equal_len(l_1, l_2):
     '''
-    Inputs:
-    
-
-    Output:
-    
+    If either lines (l_1 and l_2) have equal len, this function
+    return True. Otherwise return False.
     '''
     if (len(l_1) == len(l_2)):
         return True
@@ -34,14 +26,9 @@ def is_equal_len(l_1, l_2):
         return False
 
 
-
 def singleline_diff(string1, string2):
     '''
-    Inputs:
-    
-
-    Output:
-    
+    Return the index in that the string1 and string2 change.
     '''
     idx_change = 0
     cont = 0
@@ -59,24 +46,22 @@ def singleline_diff(string1, string2):
         return idx_change
     elif identical and not is_equal_len(string1, string2):
         if is_short_line1(string1, string2):
-            
             return len(string1)
         else:
-            
             return len(string2)
+
     elif (identical and is_equal_len(string1, string2)) or ((string1 == '') and (string2 == '')):
         return ident
+
     else:
         return idx_change
-
+        
 
 #print(singleline_diff("abcd", "abc"))
 #print(singleline_diff('a', 'b'))
 #print(singleline_diff('abc', 'abc'))
 #print(singleline_diff('abc', 'abcd'))
 #print(singleline_diff('', ''))
-
-
 
 def singleline_diff_format(line1, line2, idx):
     '''
@@ -88,18 +73,15 @@ def singleline_diff_format(line1, line2, idx):
     Return the index where the first difference between
     line1 and line2 occurs.
     '''
-    
+
     shorter = is_short_line1(line1, line2)
 
-    
     if (shorter and (0 <= idx <= len(line1))) or (not shorter and ( 0 <= idx <= len(line2))):
         mult = idx
         separator_line = (mult*"=") + '^'
 
         line1_print = line1 + '\n'
         return line1_print + separator_line + '\n' + line2 +'\n'
-
-
 
     else:
         return ""
@@ -138,7 +120,6 @@ def multiline_diff(lines1, lines2):
                 indice = singleline_diff(string1, string2)
         
                 return (cont, indice)
-               
 
     else:
         len_lines1 = len(lines1) 
@@ -159,9 +140,6 @@ def multiline_diff(lines1, lines2):
         
                 return (cont, indice)
 
-                
-
-
         return (cont, indice)
 
         
@@ -176,15 +154,12 @@ def get_file_lines(filename):
     '''
     with open(filename, "rt") as openfile:
     
-    
         lines = []
         for line in openfile:
             lines1 = line.strip()
             lines.append(lines1)
         
-
     return lines
-
 
 
 def file_diff_format(filename1, filename2):
@@ -214,13 +189,9 @@ def file_diff_format(filename1, filename2):
             for_return = "Line " + str(cont) + ":" + '\n'
             return for_return + singleline_diff_format(lines1[cont], lines2[cont], index)
 
-
-        
-
 #print(multiline_diff(["aeiou", "pepito"], ["aeiou", "pepiito"]))
 #print(multiline_diff(['line1', 'line2'], ['line1', 'line2']))
 #print(multiline_diff(['line1', 'line2'], ['line1', 'line2', 'line3']))
-print(multiline_diff([], []))
-
+#print(multiline_diff([], []))
 #print(get_file_lines("esto_es.txt"))
 #print(file_diff_format("ensayos1.txt", "ensayos.txt"))
